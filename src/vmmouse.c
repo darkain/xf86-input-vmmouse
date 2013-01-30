@@ -1017,6 +1017,15 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
       usleep(300000);
       break;
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) * 100 + GET_ABI_MINOR(ABI_XINPUT_VERSION) >= 1901
+   case  DEVICE_ABORT:
+      if (pInfo->fd != -1) {
+	 VMMousePrivPtr mPriv = (VMMousePrivPtr)pMse->mousePriv;
+	 if( mPriv->vmmouseAvailable )
+	    VMMouseClient_Disable();
+         break;
+      }
+#endif
    }
 
    return Success;
