@@ -807,7 +807,14 @@ MouseCommonOptions(InputInfoPtr pInfo)
 static void
 VMMouseUnInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags)
 {
+   MouseDevPtr pMse = pInfo->private;
+   VMMousePrivPtr mPriv = (VMMousePrivPtr)pMse->mousePriv;
+
    xf86Msg(X_INFO, "VMWARE(0): VMMouseUnInit\n");
+
+   free(mPriv);
+
+   xf86DeleteInput(pInfo, flags);
 }
 
 
