@@ -53,4 +53,4 @@ CLEANFILES += $(udev_DATA)
 
 endif # HAS_UDEV_RULES_DIR
 
-EXTRA_DIST = $(udev_DATA).in hal-probe-vmmouse.in
+EXTRA_DIST = 69-xorg-vmmouse.rules.in hal-probe-vmmouse.in
