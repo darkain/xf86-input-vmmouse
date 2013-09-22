@@ -50,7 +50,7 @@ AC_PROG_LIBTOOL
 AH_TOP([#include "xorg-server.h"])
 
 AC_ARG_WITH(xorg-module-dir,
-            AC_HELP_STRING([--with-xorg-module-dir=DIR],
+            AS_HELP_STRING([--with-xorg-module-dir=DIR],
                            [Default xorg module directory [[default=$libdir/xorg/modules]]]),
             [moduledir="$withval"],
             [moduledir="$libdir/xorg/modules"])
@@ -58,7 +58,7 @@ inputdir=${moduledir}/input
 AC_SUBST(inputdir)
 
 AC_ARG_WITH(xorg-conf-dir,
-            AC_HELP_STRING([--with-xorg-conf-dir=DIR],
+            AS_HELP_STRING([--with-xorg-conf-dir=DIR],
                            [Default xorg.conf.d directory [[default=from $PKG_CONFIG xorg-server]]]),
             [XORG_CONF_DIR="$withval"],
             [XORG_CONF_DIR="`$PKG_CONFIG --variable=sysconfigdir xorg-server`"])
@@ -66,7 +66,7 @@ AC_SUBST(XORG_CONF_DIR)
 AM_CONDITIONAL(HAS_XORG_CONF_DIR, [test "x$XORG_CONF_DIR" != "x" && test "x$XORG_CONF_DIR" != "xno"])
 
 AC_ARG_WITH(hal-bin-dir,
-	    AC_HELP_STRING([--with-hal-bin-dir=DIR],
+	    AS_HELP_STRING([--with-hal-bin-dir=DIR],
 			   [Directory where HAL binaries where installed [[default=$bindir]]]),
 	    [halbindir="$withval"],
 	    [halbindir="$bindir"])
@@ -74,7 +74,7 @@ HAL_BIN_DIR=${halbindir}
 AC_SUBST(HAL_BIN_DIR)
 
 AC_ARG_WITH(hal-callouts-dir,
-	    AC_HELP_STRING([--with-hal-callouts-dir=DIR],
+	    AS_HELP_STRING([--with-hal-callouts-dir=DIR],
 			   [Directory where HAL expects its callout scripts to be located
 			    [[default=$libdir/hal]]]),
 	    [halcalloutsdir="$withval"],
@@ -83,7 +83,7 @@ HAL_CALLOUTS_DIR=${halcalloutsdir}
 AC_SUBST(HAL_CALLOUTS_DIR)
 
 AC_ARG_WITH(hal-fdi-dir,
-	    AC_HELP_STRING([--with-hal-fdi-dir=DIR],
+	    AS_HELP_STRING([--with-hal-fdi-dir=DIR],
 			   [Directory where HAL expects its fdi files to be located
 			   [[default=$datadir/hal/fdi/policy/20thirdparty]]]),
 	    [halfdidir="$withval"],
@@ -97,7 +97,7 @@ PKG_CHECK_MODULES(UDEV, udev,
                   [UDEV_RULES_DIR=no])
 
 AC_ARG_WITH(udev-rules-dir,
-	    AC_HELP_STRING([--with-udev-rules-dir=DIR],
+	    AS_HELP_STRING([--with-udev-rules-dir=DIR],
 			   [Default udev rules.d directory
 			    [[default=($prefix)/lib/udev/rules.d on Linux, none otherwise]]]),
 	    [UDEV_RULES_DIR="$withval"],
