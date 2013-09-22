@@ -136,4 +136,11 @@ PKG_CHECK_EXISTS([xorg-server >= 1.6.0],
 # Checks for header files.
 AC_HEADER_STDC
 
-AC_OUTPUT([Makefile shared/Makefile src/Makefile tools/Makefile fdi/Makefile man/Makefile])
+AC_CONFIG_FILES([Makefile
+	shared/Makefile
+	src/Makefile
+	tools/Makefile
+	fdi/Makefile
+	man/Makefile])
+
+AC_OUTPUT
