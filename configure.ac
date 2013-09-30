@@ -89,17 +89,14 @@ AC_ARG_WITH(hal-fdi-dir,
 HAL_FDI_DIR=${halfdidir}
 AC_SUBST(HAL_FDI_DIR)
 
-
-PKG_CHECK_MODULES(UDEV, udev,
-                  [UDEV_RULES_DIR="`$PKG_CONFIG --variable=udevdir udev`/rules.d"],
-                  [UDEV_RULES_DIR=no])
-
+# Udev location for rules directory
 AC_ARG_WITH(udev-rules-dir,
 	    AS_HELP_STRING([--with-udev-rules-dir=DIR],
-			   [Default udev rules.d directory
-			    [[default=($prefix)/lib/udev/rules.d on Linux, none otherwise]]]),
-	    [UDEV_RULES_DIR="$withval"],
-	    [])
+			   [Directory where udev expects its rules files
+			   [[default=$libdir/udev/rules.d]]]),
+	    [udevdir="$withval"],
+	    [udevdir="$libdir/udev/rules.d"])
+UDEV_RULES_DIR=${udevdir}
 AC_SUBST(UDEV_RULES_DIR)
 AM_CONDITIONAL(HAS_UDEV_RULES_DIR, [test "x$UDEV_RULES_DIR" != "xno"])
 
