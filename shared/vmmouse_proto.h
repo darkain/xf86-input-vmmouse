@@ -36,11 +36,6 @@
 #ifndef _VMMOUSE_PROTO_H_
 #define _VMMOUSE_PROTO_H_
 
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdint.h>
 
 #ifdef HAVE_XORG_SERVER_1_1_0

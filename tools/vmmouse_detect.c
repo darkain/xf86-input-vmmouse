@@ -26,13 +26,13 @@
  */
 
 
-#include <stdlib.h>
-#include <signal.h>
-#include "vmmouse_client.h"
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include <stdlib.h>
+#include <signal.h>
+#include "vmmouse_client.h"
 
 void
 segvCB(int sig)

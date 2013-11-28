@@ -35,6 +35,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "vmmouse_client.h"
 #include "vmmouse_proto.h"
 
