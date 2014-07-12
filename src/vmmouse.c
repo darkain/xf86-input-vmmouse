@@ -868,10 +868,10 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
       btn_labels[0] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_LEFT);
       btn_labels[1] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_MIDDLE);
       btn_labels[2] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_RIGHT);
-      btn_labels[4] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_WHEEL_UP);
-      btn_labels[5] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_WHEEL_DOWN);
-      btn_labels[6] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_HWHEEL_LEFT);
-      btn_labels[7] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_HWHEEL_RIGHT);
+      btn_labels[3] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_WHEEL_UP);
+      btn_labels[4] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_WHEEL_DOWN);
+      btn_labels[5] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_HWHEEL_LEFT);
+      btn_labels[6] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_HWHEEL_RIGHT);
       /* other buttons are unknown */
 
 #ifdef ABS_VALUATOR_AXES
