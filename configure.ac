@@ -105,6 +105,20 @@ XORG_DRIVER_CHECK_EXT(RANDR, randrproto)
 XORG_DRIVER_CHECK_EXT(XINPUT, inputproto)
 
 # Checks for pkg-config packages
+libudev_check=yes
+AC_ARG_WITH([libudev],
+	[AS_HELP_STRING([--without-libudev],
+		[Use to build without libudev on linux])],
+	[if test x$withval = xno; then libudev_check=no; fi]
+	[])
+
+if test x`uname` = xLinux -a $libudev_check = yes; then
+   PKG_CHECK_MODULES(LIBUDEV, [libudev],
+			   [AC_DEFINE([HAVE_LIBUDEV], 1,
+			   [Has libudev installed])],
+			   []);
+fi
+
 PKG_CHECK_MODULES(XORG, [xorg-server >= 1.0.1] xproto $REQUIRED_MODULES)
 
 PKG_CHECK_EXISTS([xorg-server >= 1.1.0],

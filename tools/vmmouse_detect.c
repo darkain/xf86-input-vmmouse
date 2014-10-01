@@ -34,6 +34,8 @@
 #include <signal.h>
 #include "vmmouse_client.h"
 
+extern int vmmouse_uses_kernel_driver(void);
+
 void
 segvCB(int sig)
 {
@@ -46,6 +48,9 @@ segvCB(int sig)
 int
 main(void)
 {
+   if (vmmouse_uses_kernel_driver())
+      return 1;
+
    /*
     * If the vmmouse test is not run in a VMware virtual machine, it
     * will segfault instead of successfully accessing the port.

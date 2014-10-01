@@ -22,8 +22,11 @@ bin_PROGRAMS = @DRIVER_NAME@_detect
 
 AM_CPPFLAGS = -I$(top_srcdir)/shared $(XORG_CFLAGS)
 
-@DRIVER_NAME@_detect_SOURCES = vmmouse_detect.c
-@DRIVER_NAME@_detect_LDADD = $(top_builddir)/shared/lib@DRIVER_NAME@.la
+@DRIVER_NAME@_detect_SOURCES = vmmouse_detect.c vmmouse_udev.c
+@DRIVER_NAME@_detect_LDADD = $(top_builddir)/shared/lib@DRIVER_NAME@.la \
+				@LIBUDEV_LIBS@
+@DRIVER_NAME@_detect_CFLAGS = @LIBUDEV_CFLAGS@
+
 
 calloutsdir=$(HAL_CALLOUTS_DIR)
 callouts_SCRIPTS = hal-probe-vmmouse
