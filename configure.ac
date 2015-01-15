@@ -32,6 +32,11 @@ AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([foreign dist-bzip2])
 
+# XORG_DEFAULT_OPTIONS below forces C99. Solaris GCC doesn't like that.
+AC_PROG_CC
+AC_PROG_CC_C89
+save_solaris_cc=$CC
+
 # Require X.Org macros 1.8 or later for MAN_SUBSTS set by XORG_MANPAGE_SECTIONS
 m4_ifndef([XORG_MACROS_VERSION],
           [m4_fatal([must install xorg-macros 1.8 or later before running autoconf/autogen])])
@@ -112,12 +117,36 @@ AC_ARG_WITH([libudev],
 	[if test x$withval = xno; then libudev_check=no; fi]
 	[])
 
-if test x`uname` = xLinux -a $libudev_check = yes; then
-   PKG_CHECK_MODULES(LIBUDEV, [libudev],
-			   [AC_DEFINE([HAVE_LIBUDEV], 1,
-			   [Has libudev installed])],
-			   []);
-fi
+case $host_os in
+     linux*)
+	 if test $libudev_check != no; then
+             PKG_CHECK_MODULES(LIBUDEV, [libudev],
+					[AC_DEFINE([HAVE_LIBUDEV], 1,
+					[Has libudev installed])],
+					[]);
+         fi
+	 AC_CHECK_FUNCS(ioperm iopl,[],
+			[AC_MSG_ERROR
+			([cannot determine how to elevate io permissions)]],[1])
+	 AC_DEFINE(VMMOUSE_OS_GENERIC, 1,
+	           [Building for iopl / ioperm capable OS])
+     ;;
+     *bsd*)
+         AC_DEFINE(VMMOUSE_OS_BSD, 1, [Building for BSD flavour])
+     ;;
+     solaris*)
+	 if test "x$GCC" == "xyes"; then
+            CC="$save_solaris_cc -fms-extensions"
+	 fi
+         AC_DEFINE(VMMOUSE_OS_SOLARIS, 1, [Building for Solaris flavour])
+     ;;
+     *)
+	 AC_CHECK_FUNCS(ioperm iopl,[],
+			[AC_MSG_ERROR
+			([cannot determine how to elevate io permissions)]],[1])
+	 AC_DEFINE(VMMOUSE_OS_GENERIC, 1)
+     ;;
+esac
 
 PKG_CHECK_MODULES(XORG, [xorg-server >= 1.0.1] xproto $REQUIRED_MODULES)
 
