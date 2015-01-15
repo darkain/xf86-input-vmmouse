@@ -192,6 +192,13 @@ VMMouseClient_Enable(void) {
    }
 
    /*
+    * Restrict access to the VMMouse backdoor handler.
+    */
+   vmpc.in.vEbx = VMMOUSE_RESTRICT_IOPL;
+   vmpc.in.command = VMMOUSE_PROTO_CMD_ABSPOINTER_RESTRICT;
+   VMMouseProto_SendCmd(&vmpc);
+
+   /*
     * To quote Jeremy, "Go Go Go!"
     */
 
