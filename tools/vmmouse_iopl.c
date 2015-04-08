@@ -43,10 +43,9 @@
 #include <stdbool.h>
 
 #if defined(VMMOUSE_OS_BSD)
-#define HAVE_WRAPPER_DECLS
-#include "xf86_OSlib.h"
-#include "xf86OSpriv.h"
+#include <sys/types.h>
 #ifdef USE_I386_IOPL
+#include <machine/sysarch.h>
 /***************************************************************************/
 /* I/O Permissions section                                                 */
 /***************************************************************************/
@@ -80,6 +79,7 @@ xf86DisableIO()
 #endif /* USE_I386_IOPL */
 
 #ifdef USE_AMD64_IOPL
+#include <machine/sysarch.h>
 /***************************************************************************/
 /* I/O Permissions section                                                 */
 /***************************************************************************/
@@ -114,6 +114,9 @@ xf86DisableIO()
 #endif /* USE_AMD64_IOPL */
 
 #ifdef USE_DEV_IO
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 static int IoFd = -1;
 
 bool
