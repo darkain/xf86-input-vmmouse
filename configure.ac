@@ -22,7 +22,7 @@
 
 AC_PREREQ(2.60)
 AC_INIT([xf86-input-vmmouse],
-        [13.0.99],
+        [13.1.0],
         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
         xf86-input-vmmouse)
 
