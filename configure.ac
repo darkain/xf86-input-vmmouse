@@ -135,7 +135,7 @@ case $host_os in
          AC_DEFINE(VMMOUSE_OS_BSD, 1, [Building for BSD flavour])
      ;;
      solaris*)
-	 if test "x$GCC" == "xyes"; then
+	 if test "x$GCC" = "xyes"; then
             CC="$save_solaris_cc -fms-extensions"
 	 fi
          AC_DEFINE(VMMOUSE_OS_SOLARIS, 1, [Building for Solaris flavour])
