@@ -152,17 +152,17 @@ case $host_cpu in
      i*86)
 	case $host_os in
 		*freebsd*)	AC_DEFINE(USE_DEV_IO) ;;
-		*netbsd*)	AC_DEFINE(USE_I386_IOPL)
+		*netbsd*)	AC_DEFINE([USE_I386_IOPL], [], [BSD i386 iopl])
 				use_i386_iopl=yes ;;
-		*openbsd*)	AC_DEFINE(USE_I386_IOPL)
+		*openbsd*)	AC_DEFINE([USE_I386_IOPL], [], [BSD i386 iopl])
 				use_i386_iopl=yes ;;
 	esac
 	;;
      x86_64*|amd64*)
 	case $host_os in
 		*freebsd*)	AC_DEFINE(USE_DEV_IO, 1, [BSD /dev/io]) ;;
-		*netbsd*)	AC_DEFINE(USE_I386_IOPL, 1, [BSD i386 iopl])
-				use_i386_iopl=yes ;;
+		*netbsd*)	AC_DEFINE(USE_X86_64_IOPL, 1, [BSD X86_64 iopl])
+				use_x86_64_iopl=yes ;;
 		*openbsd*)	AC_DEFINE(USE_AMD64_IOPL, 1, [BSD AMD64 iopl])
 				use_amd64_iopl=yes ;;
 	esac
@@ -177,6 +177,11 @@ fi
 if test x$use_amd64_iopl = xyes; then
    AC_CHECK_LIB(amd64, amd64_iopl,[],
 		[AC_MSG_ERROR([cannot find library for amd64_iopl])])
+fi
+
+if test x$use_x86_64_iopl = xyes; then
+   AC_CHECK_LIB(x86_64, x86_64_iopl,[],
+                [AC_MSG_ERROR([cannot find library for x86_64_iopl])])
 fi
 
 PKG_CHECK_MODULES(XORG, [xorg-server >= 1.0.1] xproto $REQUIRED_MODULES)
