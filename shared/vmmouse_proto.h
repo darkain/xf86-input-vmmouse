@@ -53,8 +53,8 @@
 # define __x86_64__
 #endif
 
-#if !defined __i386__ && !defined __x86_64__
-#error The vmmouse protocol is only supported on x86 architectures.
+#if !defined __i386__ && !defined __x86_64__ && !defined __aarch64__
+#error The vmmouse protocol is only supported on i386, amd64, and aarch64 architectures.
 #endif
 
 #define VMMOUSE_PROTO_MAGIC 0x564D5868

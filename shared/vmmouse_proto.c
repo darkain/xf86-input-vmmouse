@@ -87,8 +87,7 @@ VMMouseProtoInOut(VMMouseProtoCmd *cmd) // IN/OUT
        */
       : "rbx", "rcx", "rdx", "rsi", "rdi", "memory"
    );
-#else
-#ifdef __i386__
+#elif defined __i386__
    uint32_t dummy;
 
    __asm__ __volatile__(
@@ -117,9 +116,29 @@ VMMouseProtoInOut(VMMouseProtoCmd *cmd) // IN/OUT
        */
       : "ecx", "edx", "esi", "edi", "memory"
    );
+#elif defined __aarch64__
+#define X86_IO_MAGIC          0x86
+#define X86_IO_W7_SIZE_SHIFT  0
+#define X86_IO_W7_DIR         (1 << 2)
+#define X86_IO_W7_WITH        (1 << 3)
+   __asm__ __volatile__(
+      "ldp x4, x5, [%0, 8 * 4] \n\t"
+      "ldp x2, x3, [%0, 8 * 2] \n\t"
+      "ldp x0, x1, [%0       ] \n\t"
+      "mov x7, %1              \n\t"
+      "movk x7, %2, lsl #32    \n\t"
+      "mrs xzr, mdccsr_el0     \n\t"
+      "stp x4, x5, [%0, 8 * 4] \n\t"
+      "stp x2, x3, [%0, 8 * 2] \n\t"
+      "stp x0, x1, [%0       ]     "
+      :
+      : "r" (cmd),
+        "M" (X86_IO_W7_WITH | X86_IO_W7_DIR | 2 << X86_IO_W7_SIZE_SHIFT),
+        "i" (X86_IO_MAGIC)
+      : "x0", "x1", "x2", "x3", "x4", "x5", "x7", "memory"
+   );
 #else
-#error "VMMouse is only supported on x86 and x86-64."
-#endif
+#error "VMMouse is only supported on i386, amd64, and aarch64."
 #endif
 }
 
